@@ -1,0 +1,22 @@
+image: golang:latest
+
+services:
+  - mysql:latest
+
+variables:
+  MYSQL_DATABASE: "mydatabase"
+  MYSQL_USER: "aluno"
+  MYSQL_PASSWORD: "iftm"
+  MYSQL_ROOT_PASSWORD: "iftm"
+
+before_script:
+  - apt-get update && apt-get install -y mysql-client
+  - mysql -h mysql -ualuno -piftm -e "CREATE DATABASE IF NOT EXISTS mydatabase;"
+
+stages:
+  - test
+
+test:
+  stage: test
+  script:
+    - go test ./...
